@@ -16,7 +16,8 @@ pub enum Role {
     Admin,
 }
 
-#[derive(Debug, Queryable)]
+#[derive(Debug, Identifiable, Queryable, Selectable)]
+#[diesel(table_name = accounts)]
 #[identifier_prefix(acct)]
 pub struct Account {
     pub id: Identifier<Account>,
@@ -43,7 +44,7 @@ sql_function! { fn coalesce(a: Nullable<Text>, b: Nullable<Text>) -> Nullable<Te
 impl Account {
     pub fn upsert_oidc_account(conn: &mut PgConnection, oidc_subject: String, name: Option<String>, email: Option<String>) -> QueryResult<Account> {
         let new_account = NewAccount {
-            id: Identifier::<Account>::default(),
+            id: Identifier::generate(),
             oidc_subject,
             name,
             email,

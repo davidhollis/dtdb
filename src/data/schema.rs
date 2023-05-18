@@ -34,8 +34,29 @@ diesel::table! {
     }
 }
 
+diesel::table! {
+    shows (id) {
+        id -> Bpchar,
+        title -> Varchar,
+        season_id -> Bpchar,
+        author -> Varchar,
+        description -> Nullable<Text>,
+        fun_facts -> Nullable<Text>,
+        opening_date -> Date,
+        closing_date -> Date,
+        use_legacy_date_rendering -> Bool,
+        poster -> Nullable<Bpchar>,
+        banner -> Nullable<Bpchar>,
+        created_at -> Timestamptz,
+        updated_at -> Timestamptz,
+    }
+}
+
+diesel::joinable!(shows -> seasons (season_id));
+
 diesel::allow_tables_to_appear_in_same_query!(
     accounts,
     media,
     seasons,
+    shows,
 );

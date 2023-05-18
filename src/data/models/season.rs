@@ -5,7 +5,7 @@ use ordinal::Ordinal;
 use crate::data::{identifiers::Identifier, schema::seasons};
 use identifier_prefix::identifier_prefix;
 
-#[derive(Debug, Queryable, Insertable)]
+#[derive(Debug, Identifiable, Queryable, Selectable)]
 #[diesel(table_name = seasons)]
 #[identifier_prefix(seasn)]
 pub struct Season {

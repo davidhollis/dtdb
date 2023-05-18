@@ -4,7 +4,8 @@ use diesel::prelude::*;
 use crate::data::{identifiers::Identifier, schema::media};
 use identifier_prefix::identifier_prefix;
 
-#[derive(Debug, Queryable)]
+#[derive(Debug, Identifiable, Queryable, Selectable)]
+#[diesel(table_name = media)]
 #[identifier_prefix(media)]
 pub struct Media {
     pub id: Identifier<Media>,
@@ -20,7 +21,7 @@ pub struct Media {
 impl Media {
     pub fn new(primary_url: String) -> NewMedia {
         NewMedia {
-            id: Identifier::default(),
+            id: Identifier::generate(),
             primary_url,
             thumbnail_url: None,
             icon_url: None,

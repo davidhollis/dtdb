@@ -1,4 +1,4 @@
-use std::{marker::PhantomData, error::Error, fmt::{Debug, Display}};
+use std::{hash::Hash, marker::PhantomData, error::Error, fmt::{Debug, Display}};
 
 use diesel::{deserialize::FromSql, sql_types::Text, backend::RawValue, pg::Pg, FromSqlRow, serialize::ToSql, AsExpression};
 use rand::{thread_rng, distributions::{Alphanumeric, DistString}};
@@ -15,11 +15,11 @@ pub trait IdentifierPrefix {
 #[diesel(sql_type = Text)]
 pub struct Identifier<T> {
     pub token: String,
-    _t: PhantomData<T>
+    _t: PhantomData<*const T>
 }
 
-impl<T: IdentifierPrefix> Default for Identifier<T> {
-    fn default() -> Self {
+impl<T: IdentifierPrefix> Identifier<T> {
+    pub fn generate() -> Self {
         let prefix = <T as IdentifierPrefix>::identifier_prefix();
         let random_part = Alphanumeric.sample_string(&mut thread_rng(), 24);
         Identifier {
@@ -28,6 +28,26 @@ impl<T: IdentifierPrefix> Default for Identifier<T> {
         }
     }
 }
+
+impl<T: IdentifierPrefix> Default for Identifier<T> {
+    fn default() -> Self {
+        Identifier::<T>::generate()
+    }
+}
+
+impl<T> Hash for Identifier<T> {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.token.hash(state);
+    }
+}
+
+impl<T> PartialEq for Identifier<T> {
+    fn eq(&self, other: &Self) -> bool {
+        self.token == other.token
+    }
+}
+
+impl<T> Eq for Identifier<T> {}
 
 impl<T> Display for Identifier<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
