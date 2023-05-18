@@ -15,7 +15,7 @@ pub fn identifier_prefix(attrs: TokenStream, item: TokenStream) -> TokenStream {
     let struct_name = tagged_struct.clone().ident;
 
     let declaration = quote!{
-        impl dtdb::data::identifiers::IdentifierPrefix for #struct_name {
+        impl crate::data::identifiers::IdentifierPrefix for #struct_name {
             fn identifier_prefix() -> &'static str {
                 #prefix
             }

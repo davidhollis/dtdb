@@ -10,6 +10,9 @@ edition = "2021"
 serde = {version = "1", features = ["derive"]}
 rand = "0.8.5"
 identifier_prefix = {path = "./identifier_prefix"}
+diesel = { version = "2.0.0", features = ["postgres", "chrono"] }
+chrono = "0.4.24"
+dotenvy = "0.15"
 
 
 [workspace]
