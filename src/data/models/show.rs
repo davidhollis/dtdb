@@ -20,8 +20,8 @@ pub struct Show {
     pub opening_date: NaiveDate,
     pub closing_date: NaiveDate,
     pub use_legacy_date_rendering: bool,
-    pub poster: Option<Identifier<Media>>,
-    pub banner: Option<Identifier<Media>>,
+    pub poster_id: Option<Identifier<Media>>,
+    pub banner_id: Option<Identifier<Media>>,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
 }
@@ -44,8 +44,8 @@ impl Show {
             opening_date,
             closing_date,
             use_legacy_date_rendering: false,
-            poster: None,
-            banner: None,
+            poster_id: None,
+            banner_id: None,
         }
     }
 }
@@ -63,6 +63,6 @@ pub struct NewShow {
     pub opening_date: NaiveDate,
     pub closing_date: NaiveDate,
     pub use_legacy_date_rendering: bool,
-    pub poster: Option<Identifier<Media>>,
-    pub banner: Option<Identifier<Media>>,
+    pub poster_id: Option<Identifier<Media>>,
+    pub banner_id: Option<Identifier<Media>>,
 }

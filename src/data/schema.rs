@@ -45,8 +45,8 @@ diesel::table! {
         opening_date -> Date,
         closing_date -> Date,
         use_legacy_date_rendering -> Bool,
-        poster -> Nullable<Bpchar>,
-        banner -> Nullable<Bpchar>,
+        poster_id -> Nullable<Bpchar>,
+        banner_id -> Nullable<Bpchar>,
         created_at -> Timestamptz,
         updated_at -> Timestamptz,
     }

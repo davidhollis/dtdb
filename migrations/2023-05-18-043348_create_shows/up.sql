@@ -8,8 +8,8 @@ CREATE TABLE shows (
   "opening_date" DATE NOT NULL,
   "closing_date" DATE NOT NULL,
   "use_legacy_date_rendering" BOOLEAN NOT NULL DEFAULT 'false',
-  "poster" CHAR(30) REFERENCES media ("id") ON DELETE SET NULL,
-  "banner" CHAR(30) REFERENCES media ("id") ON DELETE SET NULL,
+  "poster_id" CHAR(30) REFERENCES media ("id") ON DELETE SET NULL,
+  "banner_id" CHAR(30) REFERENCES media ("id") ON DELETE SET NULL,
   "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp,
   "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp,
 
