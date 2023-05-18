@@ -26,6 +26,18 @@ diesel::table! {
 }
 
 diesel::table! {
+    people (id) {
+        id -> Bpchar,
+        name -> Varchar,
+        picture_id -> Nullable<Bpchar>,
+        bio -> Nullable<Text>,
+        account_id -> Nullable<Bpchar>,
+        created_at -> Timestamptz,
+        updated_at -> Timestamptz,
+    }
+}
+
+diesel::table! {
     seasons (id) {
         id -> Bpchar,
         season_number -> Nullable<Int2>,
@@ -52,11 +64,14 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(people -> accounts (account_id));
+diesel::joinable!(people -> media (picture_id));
 diesel::joinable!(shows -> seasons (season_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
     accounts,
     media,
+    people,
     seasons,
     shows,
 );
