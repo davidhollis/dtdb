@@ -25,7 +25,17 @@ diesel::table! {
     }
 }
 
+diesel::table! {
+    seasons (id) {
+        id -> Bpchar,
+        season_number -> Nullable<Int2>,
+        start_year -> Nullable<Date>,
+        end_year -> Nullable<Date>,
+    }
+}
+
 diesel::allow_tables_to_appear_in_same_query!(
     accounts,
     media,
+    seasons,
 );

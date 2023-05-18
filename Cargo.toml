@@ -3,7 +3,13 @@ name = "dtdb"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "dtdb"
+path = "src/lib.rs"
+
+[[bin]]
+name = "generate-seasons"
+path = "bin/generate-seasons.rs"
 
 [dependencies]
 
@@ -13,6 +19,7 @@ identifier_prefix = {path = "./identifier_prefix"}
 diesel = { version = "2.0.0", features = ["postgres", "chrono"] }
 chrono = "0.4.24"
 dotenvy = "0.15"
+ordinal = "0.3.2"
 
 
 [workspace]
