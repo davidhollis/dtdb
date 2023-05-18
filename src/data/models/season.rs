@@ -7,7 +7,7 @@ use identifier_prefix::identifier_prefix;
 
 #[derive(Debug, Identifiable, Queryable, Selectable)]
 #[diesel(table_name = seasons)]
-#[identifier_prefix(seasn)]
+#[identifier_prefix(season)]
 pub struct Season {
     pub id: Identifier<Season>,
     pub season_number: i16,
