@@ -65,6 +65,14 @@ diesel::table! {
 }
 
 diesel::table! {
+    tagged_in (id) {
+        id -> Bpchar,
+        media_id -> Bpchar,
+        subject_id -> Varchar,
+    }
+}
+
+diesel::table! {
     worked_on (id) {
         id -> Bpchar,
         person_id -> Bpchar,
@@ -80,6 +88,7 @@ diesel::table! {
 diesel::joinable!(people -> accounts (account_id));
 diesel::joinable!(people -> media (picture_id));
 diesel::joinable!(shows -> seasons (season_id));
+diesel::joinable!(tagged_in -> media (media_id));
 diesel::joinable!(worked_on -> people (person_id));
 diesel::joinable!(worked_on -> shows (show_id));
 
@@ -89,5 +98,6 @@ diesel::allow_tables_to_appear_in_same_query!(
     people,
     seasons,
     shows,
+    tagged_in,
     worked_on,
 );

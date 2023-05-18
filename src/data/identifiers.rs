@@ -7,6 +7,8 @@ use serde::{de, Serialize, Deserialize, Deserializer, de::Visitor};
 // re-export the identifier_prefix(...) annotation
 pub use identifier_prefix::identifier_prefix;
 
+use super::models::any::Any;
+
 pub trait IdentifierPrefix {
     fn identifier_prefix() -> &'static str;
 }
@@ -14,7 +16,7 @@ pub trait IdentifierPrefix {
 #[derive(Debug, FromSqlRow, AsExpression)]
 #[diesel(sql_type = Text)]
 pub struct Identifier<T> {
-    pub token: String,
+    token: String,
     _t: PhantomData<*const T>
 }
 
@@ -24,6 +26,13 @@ impl<T: IdentifierPrefix> Identifier<T> {
         let random_part = Alphanumeric.sample_string(&mut thread_rng(), 24);
         Identifier {
             token: format!("{prefix}_{random_part}"),
+            _t: PhantomData::default()
+        }
+    }
+
+    pub fn to_any(self) -> Identifier<Any> {
+        Identifier {
+            token: self.token,
             _t: PhantomData::default()
         }
     }
