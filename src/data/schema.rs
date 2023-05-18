@@ -64,9 +64,24 @@ diesel::table! {
     }
 }
 
+diesel::table! {
+    worked_on (id) {
+        id -> Bpchar,
+        person_id -> Bpchar,
+        show_id -> Bpchar,
+        role -> Varchar,
+        index -> Int2,
+        context -> Varchar,
+        created_at -> Timestamptz,
+        updated_at -> Timestamptz,
+    }
+}
+
 diesel::joinable!(people -> accounts (account_id));
 diesel::joinable!(people -> media (picture_id));
 diesel::joinable!(shows -> seasons (season_id));
+diesel::joinable!(worked_on -> people (person_id));
+diesel::joinable!(worked_on -> shows (show_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
     accounts,
@@ -74,4 +89,5 @@ diesel::allow_tables_to_appear_in_same_query!(
     people,
     seasons,
     shows,
+    worked_on,
 );

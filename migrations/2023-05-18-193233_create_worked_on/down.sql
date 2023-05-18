@@ -1,0 +1,1 @@
+DROP TABLE worked_on;
