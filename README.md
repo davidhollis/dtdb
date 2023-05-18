@@ -3,6 +3,14 @@ A potential future replacement for imdt: the archive of past shows put on by Dra
 
 ## Development
 
+### Reference Material
+
+The backend for this site is written primarily in rust. It uses:
+
+  * [Diesel](https://diesel.rs/guides/) as a database abstraction layer
+
+### Environment Setup
+
 First, get postgres running and accessible from your development environment in whatever manner works best for you. Note the connection details, then
 
 ```bash
