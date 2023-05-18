@@ -19,8 +19,8 @@ pub struct Media {
 }
 
 impl Media {
-    pub fn new(primary_url: String) -> NewMedia {
-        NewMedia {
+    pub fn new(primary_url: String) -> CreateOrUpdateMedia {
+        CreateOrUpdateMedia {
             id: Identifier::generate(),
             primary_url,
             thumbnail_url: None,
@@ -31,9 +31,10 @@ impl Media {
     }
 }
 
-#[derive(Insertable)]
+#[derive(Identifiable, Insertable, AsChangeset)]
 #[diesel(table_name = media)]
-pub struct NewMedia {
+#[diesel(treat_none_as_null = true)]
+pub struct CreateOrUpdateMedia {
     id: Identifier<Media>,
     pub primary_url: String,
     pub thumbnail_url: Option<String>,

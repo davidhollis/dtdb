@@ -33,8 +33,8 @@ impl Show {
         author: String,
         opening_date: NaiveDate,
         closing_date: NaiveDate,
-    ) -> NewShow {
-        NewShow {
+    ) -> CreateOrUpdateShow {
+        CreateOrUpdateShow {
             id: Identifier::generate(),
             title,
             season_id,
@@ -48,12 +48,28 @@ impl Show {
             banner_id: None,
         }
     }
+
+    pub fn update(&self) -> CreateOrUpdateShow {
+        CreateOrUpdateShow {
+            id: self.id.clone(),
+            title: self.title.clone(),
+            season_id: self.season_id.clone(),
+            author: self.author.clone(),
+            description: self.description.clone(),
+            fun_facts: self.fun_facts.clone(),
+            opening_date: self.opening_date.clone(),
+            closing_date: self.closing_date.clone(),
+            use_legacy_date_rendering: self.use_legacy_date_rendering,
+            poster_id: self.poster_id.clone(),
+            banner_id: self.banner_id.clone(),
+        }
+    }
 }
 
-#[derive(Insertable, AsChangeset)]
+#[derive(Identifiable, Insertable, AsChangeset)]
 #[diesel(table_name = shows)]
 #[diesel(treat_none_as_null = true)]
-pub struct NewShow {
+pub struct CreateOrUpdateShow {
     id: Identifier<Show>,
     pub title: String,
     pub season_id: Identifier<Season>,

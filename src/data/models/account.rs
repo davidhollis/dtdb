@@ -29,21 +29,11 @@ pub struct Account {
     pub updated_at: DateTime<Utc>,
 }
 
-#[derive(Insertable)]
-#[diesel(table_name = accounts)]
-struct NewAccount {
-    id: Identifier<Account>,
-    oidc_subject: String,
-    name: Option<String>,
-    email: Option<String>,
-    role: Role,
-}
-
 sql_function! { fn coalesce(a: Nullable<Text>, b: Nullable<Text>) -> Nullable<Text>; }
 
 impl Account {
     pub fn upsert_oidc_account(conn: &mut PgConnection, oidc_subject: String, name: Option<String>, email: Option<String>) -> QueryResult<Account> {
-        let new_account = NewAccount {
+        let new_account = CreateOrUpdateAccount {
             id: Identifier::generate(),
             oidc_subject,
             name,
@@ -60,6 +50,16 @@ impl Account {
             ))
             .get_result(conn)
     }
+}
+
+#[derive(Identifiable, Insertable)]
+#[diesel(table_name = accounts)]
+struct CreateOrUpdateAccount {
+    id: Identifier<Account>,
+    oidc_subject: String,
+    name: Option<String>,
+    email: Option<String>,
+    role: Role,
 }
 
 impl FromSql<Text, Pg> for Role {
