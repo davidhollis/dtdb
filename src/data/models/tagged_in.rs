@@ -35,7 +35,6 @@ impl TaggedIn {
 
 #[derive(Identifiable, Insertable)]
 #[diesel(table_name = tagged_in)]
-#[diesel(treat_none_as_null = true)]
 pub struct NewTag {
     id: Identifier<TaggedIn>,
     media_id: Identifier<Media>,

@@ -38,6 +38,15 @@ diesel::table! {
 }
 
 diesel::table! {
+    profile_claimed (id) {
+        id -> Bpchar,
+        account_id -> Bpchar,
+        person_id -> Bpchar,
+        created_at -> Timestamptz,
+    }
+}
+
+diesel::table! {
     seasons (id) {
         id -> Bpchar,
         season_number -> Nullable<Int2>,
@@ -87,6 +96,8 @@ diesel::table! {
 
 diesel::joinable!(people -> accounts (account_id));
 diesel::joinable!(people -> media (picture_id));
+diesel::joinable!(profile_claimed -> accounts (account_id));
+diesel::joinable!(profile_claimed -> people (person_id));
 diesel::joinable!(shows -> seasons (season_id));
 diesel::joinable!(tagged_in -> media (media_id));
 diesel::joinable!(worked_on -> people (person_id));
@@ -96,6 +107,7 @@ diesel::allow_tables_to_appear_in_same_query!(
     accounts,
     media,
     people,
+    profile_claimed,
     seasons,
     shows,
     tagged_in,
