@@ -10,6 +10,6 @@ CREATE TABLE ec_terms (
   PRIMARY KEY ("id")
 );
 
-CREATE INDEX ec_terms_roles ON ec_terms ("role");
+CREATE INDEX ec_terms__roles ON ec_terms ("role");
 
 SELECT diesel_manage_updated_at('ec_terms');

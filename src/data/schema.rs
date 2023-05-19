@@ -13,6 +13,19 @@ diesel::table! {
 }
 
 diesel::table! {
+    awards (id) {
+        id -> Bpchar,
+        person_id -> Bpchar,
+        season_id -> Bpchar,
+        show_id -> Nullable<Bpchar>,
+        award_name -> Varchar,
+        notes -> Nullable<Text>,
+        created_at -> Timestamptz,
+        updated_at -> Timestamptz,
+    }
+}
+
+diesel::table! {
     ec_terms (id) {
         id -> Bpchar,
         person_id -> Bpchar,
@@ -106,6 +119,9 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(awards -> people (person_id));
+diesel::joinable!(awards -> seasons (season_id));
+diesel::joinable!(awards -> shows (show_id));
 diesel::joinable!(ec_terms -> people (person_id));
 diesel::joinable!(people -> accounts (account_id));
 diesel::joinable!(people -> media (picture_id));
@@ -118,6 +134,7 @@ diesel::joinable!(worked_on -> shows (show_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
     accounts,
+    awards,
     ec_terms,
     media,
     people,
