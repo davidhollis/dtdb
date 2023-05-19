@@ -3,6 +3,9 @@ name = "dtdb"
 version = "0.1.0"
 edition = "2021"
 
+
+# Build Targets
+
 [lib]
 name = "dtdb"
 path = "src/lib.rs"
@@ -11,8 +14,13 @@ path = "src/lib.rs"
 name = "generate-seasons"
 path = "bin/generate-seasons.rs"
 
+
+# Dependencies
+
 [dependencies]
 
+include_dir = "0.7.3"
+tera = "1"
 serde = {version = "1", features = ["derive"]}
 rand = "0.8.5"
 identifier_prefix = {path = "./identifier_prefix"}
@@ -21,6 +29,8 @@ chrono = "0.4.24"
 dotenvy = "0.15"
 ordinal = "0.3.2"
 
+
+# Workspace Setup
 
 [workspace]
 

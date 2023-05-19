@@ -1,0 +1,16 @@
+{% extends "layouts/_base.tera.html" %}
+{% block title %}{% block pagetitle %}{% endblock pagetitle %} &centerdot; dtdb{% endblock title %}
+{% block body %}
+<div class="masthead">
+  <h1>dtdb</h1>
+  <caption>The DramaTech Database</caption>
+</div>
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+  </ul>
+</nav>
+<article>
+  {% block content %}{% endblock content %}
+</article>
+{% endblock body %}
