@@ -1,5 +1,6 @@
 pub mod account;
 pub mod any;
+pub mod ec_term;
 pub mod media;
 pub mod person;
 pub mod profile_claimed;

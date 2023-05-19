@@ -13,6 +13,18 @@ diesel::table! {
 }
 
 diesel::table! {
+    ec_terms (id) {
+        id -> Bpchar,
+        person_id -> Bpchar,
+        role -> Varchar,
+        start_year -> Date,
+        end_year -> Date,
+        created_at -> Timestamptz,
+        updated_at -> Timestamptz,
+    }
+}
+
+diesel::table! {
     media (id) {
         id -> Bpchar,
         primary_url -> Varchar,
@@ -94,6 +106,7 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(ec_terms -> people (person_id));
 diesel::joinable!(people -> accounts (account_id));
 diesel::joinable!(people -> media (picture_id));
 diesel::joinable!(profile_claimed -> accounts (account_id));
@@ -105,6 +118,7 @@ diesel::joinable!(worked_on -> shows (show_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
     accounts,
+    ec_terms,
     media,
     people,
     profile_claimed,
