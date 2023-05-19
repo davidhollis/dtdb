@@ -21,7 +21,7 @@ pub struct ECTerm {
 }
 
 impl ECTerm {
-    pub fn new(
+    pub fn create(
         person_id: Identifier<Person>,
         role: String,
         start_year: u16,

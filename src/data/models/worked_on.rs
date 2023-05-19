@@ -31,7 +31,7 @@ pub struct WorkedOn {
 }
 
 impl WorkedOn {
-    pub fn new(
+    pub fn create(
         person_id: Identifier<Person>,
         show_id: Identifier<Show>,
         role: String,

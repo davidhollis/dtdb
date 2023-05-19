@@ -24,7 +24,7 @@ pub struct Award {
 }
 
 impl Award {
-    pub fn new(
+    pub fn create(
         person_id: Identifier<Person>,
         season_id: Identifier<Season>,
         award_name: String,

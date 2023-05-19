@@ -19,7 +19,7 @@ pub struct Media {
 }
 
 impl Media {
-    pub fn new(primary_url: String) -> CreateOrUpdateMedia {
+    pub fn create(primary_url: String) -> CreateOrUpdateMedia {
         CreateOrUpdateMedia {
             id: Identifier::generate(),
             primary_url,

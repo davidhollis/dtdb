@@ -8,7 +8,7 @@ fn main() {
     let initial_seasons =
         range
             .map(|i|
-                Season::new(
+                Season::create(
                     (i + 1).try_into().unwrap(),
                     FIRST_YEAR + i,
                     FIRST_YEAR + i + 1

@@ -27,7 +27,7 @@ pub struct Show {
 }
 
 impl Show {
-    pub fn new(
+    pub fn create(
         title: String,
         season_id: Identifier<Season>,
         author: String,

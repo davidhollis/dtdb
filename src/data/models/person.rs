@@ -21,7 +21,7 @@ pub struct Person {
 }
 
 impl Person {
-    pub fn new(name: String) -> CreateOrUpdatePerson {
+    pub fn create(name: String) -> CreateOrUpdatePerson {
         CreateOrUpdatePerson {
             id: Identifier::generate(),
             name,

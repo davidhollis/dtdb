@@ -16,7 +16,7 @@ pub struct Season {
 }
 
 impl Season {
-    pub fn new(number: i16, start_year: u16, end_year: u16) -> Option<Season> {
+    pub fn create(number: i16, start_year: u16, end_year: u16) -> Option<Season> {
         Some(Season {
             id: Identifier::default(),
             season_number: number,
