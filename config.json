@@ -1,0 +1,48 @@
+{
+  // Configuration options available for the dbdt server:
+
+
+  // The connection URL for diesel
+  // If database_url is absent, it'll be pulled from the environment ($DATABASE_URL)
+  // This is for ease of development since a bunch of diesel's tooling expects to
+  // find it there. In production, it should live in config.json.
+
+  // database_url: "postgres://dtdb:dtdbpassword@localhost:5437/dtdb_dev",
+
+  // The socket to listen on
+  bind: {
+    // Listen on a network socket
+    socket: {
+      address: "127.0.0.1",
+      port: 6474,
+    },
+
+    // Listen on a unix domain socket
+    // unix_socket: {
+    //   path: "/var/run/dtdb.sock"
+    // },
+  },
+
+  // log4rs config. See [the docs](https://docs.rs/log4rs/1.2.0/log4rs/index.html#configuration)
+  // for more info. All options are supported.
+  log: {
+    appenders: {
+      stderr: {
+        kind: "console",
+        target: "stderr",
+      },
+    },
+    root: {
+      level: "warn",
+      appenders: ["stderr"],
+    },
+    loggers: {
+      server: {
+        level: "info",
+      },
+      dtdb: {
+        level: "debug",
+      }
+    },
+  },
+}
