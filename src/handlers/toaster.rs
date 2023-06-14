@@ -1,11 +1,13 @@
 use std::sync::Arc;
 
-use axum::{response::IntoResponse, extract::State};
+use axum::extract::State;
 
-use crate::{view::EmptyContext, application::Application};
+use crate::application::Application;
+
+use super::HandlerResult;
 
 pub async fn toaster(
     State(app): State<Arc<Application>>
-) -> impl IntoResponse {
-    app.views.render_page("toaster", EmptyContext {})
+) -> HandlerResult {
+    Ok(app.views.render_page("toaster")?)
 }

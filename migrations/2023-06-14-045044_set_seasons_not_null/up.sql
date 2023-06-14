@@ -1,0 +1,3 @@
+ALTER TABLE seasons ALTER COLUMN "season_number" SET NOT NULL;
+ALTER TABLE seasons ALTER COLUMN "start_year" SET NOT NULL;
+ALTER TABLE seasons ALTER COLUMN "end_year" SET NOT NULL;
