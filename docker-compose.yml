@@ -1,0 +1,26 @@
+services:
+  database:
+    env_file: [docker-compose.env]
+    image: postgres
+    volumes: ['database-data:/var/lib/postgresql/data/']
+    ports: ['5432:5432']
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}'"]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 10s  
+  website:
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: true
+    env_file: [docker-compose.env]
+    build: '.'
+    ports: ['6474:6474']
+    volumes:
+        - type: bind
+          source: '.'
+          target: /project/src
+version: '3.9'
+volumes: {database-data: null}

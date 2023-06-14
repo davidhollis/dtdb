@@ -1,4 +1,4 @@
-use std::{path::PathBuf, error::Error, sync::Arc, net::{SocketAddrV4, Ipv4Addr}};
+use std::{path::PathBuf, error::Error, sync::Arc, net::{SocketAddr, IpAddr}};
 
 use axum::Server;
 use clap::Parser;
@@ -38,7 +38,7 @@ async fn main() -> Result<(),Box<dyn Error>> {
 
     match &app.config.bind {
         Bind::Socket { address, port } => {
-            let addr = SocketAddrV4::new(address.parse::<Ipv4Addr>()?, *port);
+            let addr = SocketAddr::new(address.parse::<IpAddr>()?, *port);
             log::info!("Listening on {}", addr);
             Server::bind(&addr.into())
                 .serve(routes.into_make_service())

@@ -13,7 +13,7 @@
   bind: {
     // Listen on a network socket
     socket: {
-      address: "127.0.0.1",
+      address: "0.0.0.0",
       port: 6474,
     },
 
@@ -42,6 +42,9 @@
       },
       dtdb: {
         level: "debug",
+      },
+      tower_http: {
+        level: "info"
       }
     },
   },
