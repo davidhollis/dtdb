@@ -21,45 +21,48 @@ The backend for this site is written primarily in rust. It uses:
 
 ### Environment Setup
 
-First, get postgres running and accessible from your development environment in whatever manner works best for you. Note the connection details, then
+The most direct way to get set up is to ensure you have [docker](https://www.docker.com) installed and run
 
 ```bash
-echo "DATABASE_URL=postgres://user:pass@localhost:5432/dtdb_dev" >.env
+docker compose up
 ```
 
-where the credentials, host, and port are appropriate for your setup. The database name `dtdb_dev` is recommended, but you can name the database whatever you want. If it doesn't exist yet, it'll be created later as long as the user has permission to create a database.
+This will start containers for the database and the application server, initialialize and migrate the database, and start the application server on port 6474[^1]. It will also watch the current directory, and will rebuild and restart the application server on almost any change[^2] to the application.
+
+[^1]: chosen because it doesn't belong to any other popular application and `"\x64\x74"` is `"dt"`
+[^2]: It may miss changes that only impact views, static files, or migrations. If you notice that happening, `docker compose restart website` should force a reload.
 
 <details>
-  <summary>Example postgres setup with docker</summary>
+  <summary>I want to set this up without using containers</summary>
+
+  First, get postgres running and accessible from your development environment in whatever manner works best for you. Note the connection details, then
 
   ```bash
-  docker pull postgres
-  docker run \
-    --name dtdb-postgres \
-    -e POSTGRES_USER=dtdb \
-    -e POSTGRES_PASSWORD=dtdbpassword \
-    -e POSTGRES_DB=dtdb_dev \
-    -d -p 5437:5432 \
-    postgres
-  echo "DATABASE_URL=postgres://dtdb:dtdbpassword@localhost:5437/dtdb_dev" >.env
+  echo "DATABASE_URL=postgres://user:pass@localhost:5432/dtdb_dev" >.env
+  ```
+
+  where the credentials, host, and port are appropriate for your setup. The database name `dtdb_dev` is recommended, but you can name the database whatever you want. If it doesn't exist yet, it'll be created later as long as the user has permission to create a database.
+
+  Next, make sure you have rust installed, then run the following to migrate the DB:
+
+  ```bash
+  # Install the CLI for the database abstraction library
+  cargo install diesel_cli --no-default-features --features postgres
+
+  # Create the database if it doesn't exist and run all the migrations
+  diesel setup
+  ```
+
+  Finally, make sure everything's working:
+
+  ```bash
+  cargo build
+  cargo test
+  ```
+
+  Now, to launch the application server, you can run
+
+  ```bash
+  cargo run -- --config config.json
   ```
 </details>
-
-Next, make sure you have rust installed, then run the following to migrate the DB:
-
-```bash
-# Install the CLI for the database abstraction library
-cargo install diesel_cli --no-default-features --features postgres
-
-# Create the database if it doesn't exist and run all the migrations
-diesel setup
-```
-
-Finally, make sure everything's working:
-
-```bash
-cargo build
-cargo test
-```
-
-And you should be good to go!
