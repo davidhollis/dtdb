@@ -74,9 +74,9 @@ diesel::table! {
 diesel::table! {
     seasons (id) {
         id -> Bpchar,
-        season_number -> Nullable<Int2>,
-        start_year -> Nullable<Date>,
-        end_year -> Nullable<Date>,
+        season_number -> Int2,
+        start_year -> Date,
+        end_year -> Date,
     }
 }
 

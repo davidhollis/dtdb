@@ -1,6 +1,7 @@
 use chrono::{NaiveDate, Datelike};
 use diesel::prelude::*;
 use ordinal::Ordinal;
+use serde::{Serialize, ser::SerializeStruct};
 
 use crate::data::{identifiers::Identifier, schema::seasons};
 use identifier_prefix::identifier_prefix;
@@ -32,5 +33,17 @@ impl Season {
             self.start_year.year(),
             self.end_year.year()
         )
+    }
+}
+
+impl Serialize for Season {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        where
+            S: serde::Serializer {
+        let mut season = serializer.serialize_struct("Season", 3)?;
+        season.serialize_field("id", &self.id)?;
+        season.serialize_field("season_number", &self.season_number)?;
+        season.serialize_field("title", &self.title())?;
+        season.end()
     }
 }

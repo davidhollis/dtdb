@@ -4,11 +4,13 @@ use axum::{Router, routing::get};
 use tower_http::trace::{self, TraceLayer};
 use tracing::Level;
 
-use crate::{handlers::toaster::toaster, application::Application};
+use crate::{handlers::{toaster::toaster, seasons}, application::Application};
 
 pub fn build_routes(app: Arc<Application>) -> Router {
 
     Router::new()
+        .route("/seasons", get(seasons::list))
+        .route("/seasons/:season_id", get(seasons::single))
         .route("/toaster", get(toaster))
         .with_state(app)
         .layer(

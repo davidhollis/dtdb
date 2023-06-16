@@ -1,11 +1,6 @@
-use std::{error::Error, fmt::Display};
-
-use axum::response::{Html, IntoResponse};
-use hyper::StatusCode;
-use serde::Serialize;
+use axum::response::Html;
 use tera::Context;
 use tera::Tera;
-use tera::Error as TeraError;
 use include_dir::{include_dir, Dir, DirEntry, File};
 
 static TEMPLATES_DIR: Dir<'static> = include_dir!("$CARGO_MANIFEST_DIR/views");
@@ -15,7 +10,7 @@ pub struct Views {
 }
 
 impl Views {
-    pub fn init() -> Result<Views, ViewError> {
+    pub fn init() -> anyhow::Result<Views> {
         // Create a new empty Tera instance
         let mut tera = Tera::default();
 
@@ -31,42 +26,14 @@ impl Views {
         Ok(Views {tera})
     }
 
-    pub fn render_page(&self, page: &str, context: impl Serialize) -> Result<Html<String>, ViewError> {
+    pub fn render_page(&self, page: &str) -> anyhow::Result<Html<String>> {
         let template_name = format!("pages/{}.tera.html", page);
-        let context = Context::from_serialize(context)?;
-        Ok(Html(self.tera.render(template_name.as_str(), &context)?))
+        Ok(Html(self.tera.render(template_name.as_str(), &Context::new())?))
     }
-}
 
-#[derive(Serialize)]
-pub struct EmptyContext {}
-
-#[derive(Debug)]
-pub struct ViewError {
-    caused_by: TeraError
-}
-
-impl Error for ViewError {
-    fn source(&self) -> Option<&(dyn Error + 'static)> {
-        Some(&self.caused_by)
-    }
-}
-
-impl Display for ViewError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "The following error occured while rendering views: {}", self.caused_by)
-    }
-}
-
-impl From<TeraError> for ViewError {
-    fn from(err: TeraError) -> Self {
-        ViewError { caused_by: err }
-    }
-}
-
-impl IntoResponse for ViewError {
-    fn into_response(self) -> axum::response::Response {
-        (StatusCode::INTERNAL_SERVER_ERROR, self.to_string()).into_response()
+    pub fn render_page_with(&self, page: &str, context: &tera::Context) -> anyhow::Result<Html<String>> {
+        let template_name = format!("pages/{}.tera.html", page);
+        Ok(Html(self.tera.render(template_name.as_str(), context)?))
     }
 }
 

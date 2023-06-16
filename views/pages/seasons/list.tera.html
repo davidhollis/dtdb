@@ -1,0 +1,10 @@
+{% extends "layouts/main.tera.html" %}
+{% block pagetitle %}Seasons{% endblock pagetitle %}
+{% block content %}
+<h2>Seasons</h2>
+<ul>
+  {% for season in seasons %}
+    <li><a href="/seasons/{{ season.id }}">{{ season.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock content %}
