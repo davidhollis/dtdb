@@ -10,7 +10,7 @@ pub fn build_routes(app: Arc<Application>) -> Router {
 
     Router::new()
         .route("/seasons", get(seasons::list))
-        .route("/seasons/:season_id", get(seasons::show))
+        .route("/seasons/:season_id", get(seasons::single))
         .route("/toaster", get(toaster))
         .with_state(app)
         .layer(

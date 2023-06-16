@@ -22,7 +22,7 @@ pub async fn list(
     Ok(app.views.render_page_with("seasons/list", &context)?)
 }
 
-pub async fn show(
+pub async fn single(
     Path(season_id): Path<String>,
     State(app): State<Arc<Application>>
 ) -> HandlerResult {
@@ -31,5 +31,5 @@ pub async fn show(
     })?;
     let mut context = Context::new();
     context.insert("season", &season);
-    Ok(app.views.render_page_with("seasons/show", &context)?)
+    Ok(app.views.render_page_with("seasons/single", &context)?)
 }
