@@ -6,7 +6,7 @@ pub mod toaster;
 
 type HandlerResult = Result<Html<String>, HandlerError>;
 
-struct HandlerError(anyhow::Error);
+pub struct HandlerError(anyhow::Error);
 
 impl IntoResponse for HandlerError {
     // TODO: not all errors ought to be 500s. Consider doing a bit of
@@ -15,7 +15,7 @@ impl IntoResponse for HandlerError {
     fn into_response(self) -> axum::response::Response {
         (
             StatusCode::INTERNAL_SERVER_ERROR,
-            format!("An unexpected error occurred: {}", self.0),
+            format!("An unexpected error occurred: {:?}", self.0),
         ).into_response()
     }
 }
