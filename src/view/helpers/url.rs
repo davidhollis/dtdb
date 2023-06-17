@@ -4,6 +4,15 @@ use serde_json::Value;
 
 use crate::util;
 
+// Usage:
+//   url(for=<model object>)
+//     -> a URL for viewing that object
+//   url(for=<model object>, action=<string>)
+//     -> a URL for performing the indicated action on that object
+//   url(id=<string>)
+//     -> a URL for viewing the object identified by the given token (string)
+//   url(id=<string>, action=<string>)
+//     -> a URL for performing the indicated action on the object identified by the given token (string)
 pub fn url(args: &HashMap<String, Value>) -> tera::Result<Value> {
     let id_str = extract_id(args)?;
     let id_prefix = extract_id_prefix(id_str)?;
@@ -15,6 +24,12 @@ pub fn url(args: &HashMap<String, Value>) -> tera::Result<Value> {
     }
 }
 
+
+// Usage:
+//   index_url(for=<model object>)
+//     -> a URL for listing instances of the same type as that object
+//   index_url(id=<string>)
+//     -> a URL for listing instances of the type identified by the given token (string)
 pub fn index_url(args: &HashMap<String, Value>) -> tera::Result<Value> {
     let id_str = extract_id(args)?;
     let id_prefix = extract_id_prefix(id_str)?;
