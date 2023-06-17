@@ -4,7 +4,7 @@
 <h2>Seasons</h2>
 <ul>
   {% for season in seasons %}
-    <li><a href="/seasons/{{ season.id }}">{{ season.title }}</a></li>
+    <li><a href="{{ url(for=season) }}">{{ season.title }}</a></li>
   {% endfor %}
 </ul>
 {% endblock content %}

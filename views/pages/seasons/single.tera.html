@@ -3,6 +3,6 @@
 {% block content %}
 <h2>{{ season.title }}</h2>
 <p>
-  <a href="/seasons">&larr; All seasons</a>
+  <a href="{{ index_url(for=season) }}">&larr; All seasons</a>
 </p>
 {% endblock content %}

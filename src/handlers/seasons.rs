@@ -1,6 +1,8 @@
 use std::sync::Arc;
 
+use axum::Router;
 use axum::extract::{State, Path};
+use axum::routing::get;
 use diesel::dsl::today;
 use diesel::prelude::*;
 use tera::Context;
@@ -11,7 +13,13 @@ use crate::application::Application;
 
 use super::HandlerResult;
 
-pub async fn list(
+pub fn routes() -> Router<Arc<Application>> {
+    Router::new()
+        .route("/", get(list))
+        .route("/:season_id", get(single))
+}
+
+async fn list(
     State(app): State<Arc<Application>>
 ) -> HandlerResult {
     let all_seasons = app.with_db_connection(|db| {
@@ -22,7 +30,7 @@ pub async fn list(
     Ok(app.views.render_page_with("seasons/list", &context)?)
 }
 
-pub async fn single(
+async fn single(
     Path(season_id): Path<String>,
     State(app): State<Arc<Application>>
 ) -> HandlerResult {
