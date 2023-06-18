@@ -40,10 +40,12 @@ impl Serialize for Season {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
         where
             S: serde::Serializer {
-        let mut season = serializer.serialize_struct("Season", 3)?;
+        let mut season = serializer.serialize_struct("Season", 5)?;
         season.serialize_field("id", &self.id)?;
         season.serialize_field("season_number", &self.season_number)?;
         season.serialize_field("title", &self.title())?;
+        season.serialize_field("start_year", &self.start_year)?;
+        season.serialize_field("end_year", &self.end_year)?;
         season.end()
     }
 }
