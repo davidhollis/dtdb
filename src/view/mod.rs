@@ -3,6 +3,8 @@ use tera::Context;
 use tera::Tera;
 use include_dir::{include_dir, Dir, DirEntry, File};
 
+mod helpers;
+
 static TEMPLATES_DIR: Dir<'static> = include_dir!("$CARGO_MANIFEST_DIR/views");
 
 pub struct Views {
@@ -22,6 +24,10 @@ impl Views {
         tera.check_macro_files()?;
 
         log::debug!("Successfully loaded templates: {:?}", tera.get_template_names().collect::<Vec<&str>>());
+
+        // Register helper functions
+        tera.register_function("url", helpers::url::url);
+        tera.register_function("index_url", helpers::url::index_url);
 
         Ok(Views {tera})
     }
