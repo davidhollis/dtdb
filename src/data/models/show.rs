@@ -76,7 +76,7 @@ impl Show {
                 4..=6 => format!("Spring {year}"),
                 7..=9 => format!("Summer {year}"),
                 10..=12 => format!("Fall {year}"),
-                _ => format!("An unkowable time spread across the moments of {year}"),
+                _ => format!("An unknowable time spread across the moments of {year}"),
             }
         } else {
             let opening_year = self.opening_date.year();
@@ -98,22 +98,6 @@ impl Show {
         }
     }
 }
-
-// pub struct Show {
-//     pub id: Identifier<Show>,
-//     pub title: String,
-//     pub season_id: Identifier<Season>,
-//     pub author: String,
-//     pub description: Option<String>,
-//     pub fun_facts: Option<String>,
-//     pub opening_date: NaiveDate,
-//     pub closing_date: NaiveDate,
-//     pub use_legacy_date_rendering: bool,
-//     pub poster_id: Option<Identifier<Media>>,
-//     pub banner_id: Option<Identifier<Media>>,
-//     pub created_at: DateTime<Utc>,
-//     pub updated_at: DateTime<Utc>,
-// }
 
 impl Serialize for Show {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
