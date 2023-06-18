@@ -1,12 +1,13 @@
 use chrono::{DateTime, Utc};
 use diesel::prelude::*;
 use identifier_prefix::identifier_prefix;
+use serde::Serialize;
 
 use crate::data::{identifiers::Identifier, schema::awards};
 
 use super::{person::Person, show::Show, season::Season};
 
-#[derive(Debug, Identifiable, Queryable, Selectable, Associations)]
+#[derive(Debug, Identifiable, Queryable, Selectable, Associations, Serialize)]
 #[diesel(belongs_to(Person))]
 #[diesel(belongs_to(Season))]
 #[diesel(belongs_to(Show))]

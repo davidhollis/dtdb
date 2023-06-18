@@ -4,11 +4,13 @@ use diesel::pg::Pg;
 use diesel::{prelude::*, FromSqlRow, AsExpression};
 use diesel::serialize::ToSql;
 use diesel::sql_types::{Nullable, Text};
+use serde::Serialize;
 
 use crate::data::{schema::accounts, identifiers::Identifier};
 use identifier_prefix::identifier_prefix;
 
-#[derive(Debug, FromSqlRow, AsExpression)]
+#[derive(Debug, FromSqlRow, AsExpression, Serialize)]
+#[serde(rename_all = "snake_case")]
 #[diesel(sql_type = Text)]
 pub enum Role {
     Default,
@@ -52,10 +54,11 @@ impl Account {
     }
 }
 
-#[derive(Identifiable, Insertable)]
+#[derive(Identifiable, Insertable, Serialize)]
 #[diesel(table_name = accounts)]
 struct CreateOrUpdateAccount {
     id: Identifier<Account>,
+    #[serde(skip_serializing)]
     oidc_subject: String,
     name: Option<String>,
     email: Option<String>,
