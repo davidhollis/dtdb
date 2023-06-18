@@ -1,12 +1,14 @@
 use chrono::{DateTime, Utc};
 use diesel::{prelude::*, pg::Pg, sql_types::Text, deserialize::{FromSql, FromSqlRow}, serialize::ToSql, expression::AsExpression};
 use identifier_prefix::identifier_prefix;
+use serde::Serialize;
 
 use crate::data::{identifiers::Identifier, schema::worked_on};
 
 use super::{person::Person, show::Show};
 
-#[derive(Debug, Clone, FromSqlRow, AsExpression)]
+#[derive(Debug, Clone, FromSqlRow, AsExpression, Serialize)]
+#[serde(rename_all = "snake_case")]
 #[diesel(sql_type = Text)]
 pub enum Context {
     Cast,
@@ -14,7 +16,7 @@ pub enum Context {
     SpecialThanks,
 }
 
-#[derive(Debug, Identifiable, Queryable, Selectable, Associations)]
+#[derive(Debug, Identifiable, Queryable, Selectable, Associations, Serialize)]
 #[diesel(belongs_to(Person))]
 #[diesel(belongs_to(Show))]
 #[diesel(table_name = worked_on)]

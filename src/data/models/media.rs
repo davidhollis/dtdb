@@ -1,10 +1,11 @@
 use chrono::{Utc, DateTime};
 use diesel::prelude::*;
+use serde::Serialize;
 
 use crate::data::{identifiers::Identifier, schema::media};
 use identifier_prefix::identifier_prefix;
 
-#[derive(Debug, Identifiable, Queryable, Selectable)]
+#[derive(Debug, Identifiable, Queryable, Selectable, Serialize)]
 #[diesel(table_name = media)]
 #[identifier_prefix(media)]
 pub struct Media {

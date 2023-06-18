@@ -1,6 +1,7 @@
 use chrono::{NaiveDate, DateTime, Utc, Datelike};
 use diesel::prelude::*;
 use identifier_prefix::identifier_prefix;
+use serde::{Serialize, ser::SerializeStruct};
 
 use crate::data::{identifiers::Identifier, schema::ec_terms};
 
@@ -55,6 +56,23 @@ impl ECTerm {
         } else {
             format!("{}–{}", start_year, end_year)
         }
+    }
+}
+
+impl Serialize for ECTerm {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        where
+            S: serde::Serializer {
+        let mut ec_term = serializer.serialize_struct("ECTerm", 8)?;
+        ec_term.serialize_field("id", &self.id)?;
+        ec_term.serialize_field("person_id", &self.person_id)?;
+        ec_term.serialize_field("role", &self.role)?;
+        ec_term.serialize_field("start_year", &self.start_year)?;
+        ec_term.serialize_field("end_year", &self.end_year)?;
+        ec_term.serialize_field("year_range", &self.format_year_range())?;
+        ec_term.serialize_field("created_at", &self.created_at)?;
+        ec_term.serialize_field("updated_at", &self.updated_at)?;
+        ec_term.end()
     }
 }
 
